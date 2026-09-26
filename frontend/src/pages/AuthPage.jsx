@@ -26,6 +26,11 @@ const AuthPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLogin && !formData.email.trim().toLowerCase().endsWith('@gmail.com')) {
+      setError('Registration is only available for @gmail.com addresses.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -36,7 +41,7 @@ const AuthPage = () => {
           navigate('/dashboard');
         }
       } else {
-        await register(formData.name, formData.email, formData.password, formData.role);
+        await register(formData.name, formData.email.trim(), formData.password);
       }
     } catch (err) {
       setError(err.message);
@@ -142,7 +147,7 @@ const AuthPage = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="user@stocksense.com"
+                  placeholder="you@gmail.com"
                   className="form-input"
                   style={{ paddingLeft: '36px' }}
                 />
@@ -178,12 +183,8 @@ const AuthPage = () => {
             </div>
 
             {!isLogin && (
-              <div className="form-group">
-                <label className="form-label">System Role</label>
-                <select name="role" value={formData.role} onChange={handleChange} className="form-select">
-                  <option value="warehouse_staff">Warehouse Staff (Transfers, Picking, Shelving)</option>
-                  <option value="inventory_manager">Inventory Manager (Full Admin Control)</option>
-                </select>
+              <div style={{ fontSize: '12px', color: '#64748b', backgroundColor: '#f1f5f9', padding: '8px 12px', borderRadius: '6px', marginBottom: '16px' }}>
+                ℹ️ Use an <strong>@gmail.com</strong> address to register. Public registrations are created as <strong>Warehouse Staff</strong>.
               </div>
             )}
 

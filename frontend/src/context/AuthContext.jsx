@@ -47,10 +47,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Register handler
-  const register = async (name, email, password, role = 'warehouse_staff') => {
+  // Register handler (Locked to Warehouse Staff)
+  const register = async (name, email, password) => {
     try {
-      const res = await api.post('/auth/register', { name, email, password, role });
+      const res = await api.post('/auth/register', { name, email, password });
       setOtpPendingEmail(email);
       return res.data;
     } catch (err) {
