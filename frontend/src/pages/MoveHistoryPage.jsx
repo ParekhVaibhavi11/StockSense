@@ -75,7 +75,7 @@ const MoveHistoryPage = () => {
                   <th>Movement Type</th>
                   <th>Product</th>
                   <th>SKU Code</th>
-                  <th>Source $\rightarrow$ Destination Location</th>
+                  <th>Source → Destination Location</th>
                   <th>Quantity Moved</th>
                   <th>Status</th>
                 </tr>
@@ -107,7 +107,7 @@ const MoveHistoryPage = () => {
                       <td><span style={{ fontFamily: 'monospace', fontSize: '12px' }}>{move.sku}</span></td>
                       <td style={{ fontSize: '13px' }}>
                         <span style={{ color: '#475569' }}>{move.source_location_name || 'Vendor Loc'}</span>
-                        <span style={{ margin: '0 6px', color: '#94a3b8' }}>$\rightarrow$</span>
+                        <span style={{ margin: '0 6px', color: '#94a3b8' }}>→</span>
                         <span style={{ fontWeight: '600', color: '#0f172a' }}>{move.dest_location_name || 'Customer Loc'}</span>
                       </td>
                       <td style={{ fontWeight: '700', color: '#0f172a' }}>

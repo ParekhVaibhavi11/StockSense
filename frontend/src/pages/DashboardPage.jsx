@@ -187,7 +187,7 @@ const DashboardPage = () => {
                 <tr>
                   <th>Reference</th>
                   <th>Type</th>
-                  <th>Source $\rightarrow$ Destination</th>
+                  <th>Source → Destination</th>
                   <th>Line Items</th>
                   <th>Status</th>
                   <th>Created Date</th>
@@ -207,7 +207,7 @@ const DashboardPage = () => {
                       <td style={{ textTransform: 'capitalize' }}>{op.type}</td>
                       <td style={{ fontSize: '13px' }}>
                         <span style={{ color: '#475569' }}>{op.source_location_name || 'Vendor'}</span>
-                        <span style={{ margin: '0 6px', color: '#94a3b8' }}>$\rightarrow$</span>
+                        <span style={{ margin: '0 6px', color: '#94a3b8' }}>→</span>
                         <span style={{ fontWeight: '600', color: '#0f172a' }}>{op.dest_location_name || 'Customer'}</span>
                       </td>
                       <td>{op.total_items} item(s)</td>
