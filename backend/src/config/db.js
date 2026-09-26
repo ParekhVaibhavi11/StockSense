@@ -5,6 +5,7 @@ dotenv.config();
 
 const { Pool } = pg;
 
+// Configure pool with DATABASE_URL or individual PG credentials
 const poolConfig = process.env.DATABASE_URL
   ? { connectionString: process.env.DATABASE_URL }
   : {
@@ -32,4 +33,7 @@ pool.on('error', (err) => {
  */
 export const query = (text, params) => pool.query(text, params);
 
+/**
+ * Acquire a client connection from the pool for atomic SQL transactions (BEGIN/COMMIT/ROLLBACK)
+ */
 export const getClient = () => pool.connect();

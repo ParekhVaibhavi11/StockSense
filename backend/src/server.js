@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 
 // Import Feature Modules
 import authRoutes from './modules/auth/auth.routes.js';
+import productsRoutes from './modules/products/products.routes.js';
+import inventoryRoutes from './modules/inventory/inventory.routes.js';
 
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -27,6 +29,8 @@ app.get('/api/health', (req, res) => {
 
 // Register Modular Feature Routers
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
 // Global Error Handler Middleware
 app.use(errorHandler);
