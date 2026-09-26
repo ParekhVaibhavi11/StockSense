@@ -7,6 +7,8 @@ import authRoutes from './modules/auth/auth.routes.js';
 import productsRoutes from './modules/products/products.routes.js';
 import inventoryRoutes from './modules/inventory/inventory.routes.js';
 
+import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
+import locationsRoutes from './modules/locations/locations.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -31,6 +33,8 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/inventory', inventoryRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/locations', locationsRoutes);
 
 // Global Error Handler Middleware
 app.use(errorHandler);
