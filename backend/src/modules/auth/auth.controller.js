@@ -95,3 +95,27 @@ export const handleGetProfile = async (req, res, next) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 };
+
+/**
+ * Update Profile Controller
+ */
+export const handleUpdateProfile = async (req, res, next) => {
+  try {
+    const result = await authService.updateUserProfile(req.user.id, req.body);
+    return res.status(200).json({ success: true, ...result });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+/**
+ * Change Password Controller
+ */
+export const handleChangePassword = async (req, res, next) => {
+  try {
+    const result = await authService.changeUserPassword(req.user.id, req.body);
+    return res.status(200).json({ success: true, ...result });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+};

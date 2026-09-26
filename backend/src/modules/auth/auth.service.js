@@ -259,3 +259,60 @@ export const resetPasswordWithOTP = async ({ email, otp, newPassword }) => {
 
   return { message: 'Password reset successful! You can now log in with your new password.' };
 };
+
+/**
+ * Update User Profile (Name & Email)
+ */
+export const updateUserProfile = async (userId, { name, email }) => {
+  if (email) {
+    const existing = await query('SELECT id FROM users WHERE email = $1 AND id != $2', [email.toLowerCase(), userId]);
+    if (existing.rows.length > 0) {
+      throw new Error('This email address is already in use by another account.');
+    }
+  }
+
+  const result = await query(
+    `UPDATE users
+     SET name = COALESCE($1, name),
+         email = COALESCE($2, email)
+     WHERE id = $3
+     RETURNING id, name, email, role, is_verified, created_at`,
+    [name, email ? email.toLowerCase() : null, userId]
+  );
+
+  if (result.rows.length === 0) {
+    throw new Error('User account not found.');
+  }
+
+  return {
+    message: 'Profile updated successfully.',
+    user: result.rows[0],
+  };
+};
+
+/**
+ * Change User Password (Requires current password verification)
+ */
+export const changeUserPassword = async (userId, { currentPassword, newPassword }) => {
+  const userRes = await query('SELECT id, password_hash FROM users WHERE id = $1', [userId]);
+  if (userRes.rows.length === 0) {
+    throw new Error('User account not found.');
+  }
+
+  const user = userRes.rows[0];
+
+  const isMatch = await bcrypt.compare(currentPassword, user.password_hash);
+  if (!isMatch) {
+    throw new Error('Current password is incorrect. Please try again.');
+  }
+
+  if (newPassword.length < 6) {
+    throw new Error('New password must be at least 6 characters long.');
+  }
+
+  const newHash = await bcrypt.hash(newPassword, 10);
+  await query('UPDATE users SET password_hash = $1 WHERE id = $2', [newHash, userId]);
+
+  return { message: 'Password changed successfully!' };
+};
+

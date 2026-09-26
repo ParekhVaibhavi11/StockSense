@@ -56,4 +56,21 @@ router.post(
 // GET /api/auth/me (Protected Profile)
 router.get('/me', authenticate, authController.handleGetProfile);
 
+// PUT /api/auth/profile (Update Name & Email)
+router.put(
+  '/profile',
+  authenticate,
+  validateRequiredFields(['name', 'email']),
+  validateEmail,
+  authController.handleUpdateProfile
+);
+
+// PUT /api/auth/change-password (Change Password)
+router.put(
+  '/change-password',
+  authenticate,
+  validateRequiredFields(['currentPassword', 'newPassword']),
+  authController.handleChangePassword
+);
+
 export default router;
