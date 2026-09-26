@@ -229,7 +229,7 @@ const OperationsPage = () => {
               <p style={{ fontSize: '13px', color: '#64748b' }}>
                 {activeTab === 'receipt' && 'Record goods arriving from vendors. Validation increases inventory stock.'}
                 {activeTab === 'delivery' && 'Manage customer shipments. Picking, packing & validation decreases stock.'}
-                {activeTab === 'internal' && 'Transfer items between internal warehouses & racks (Main Store $\rightarrow$ Production Floor).'}
+                {activeTab === 'internal' && 'Transfer items between internal warehouses & racks (Main Store → Production Floor).'}
                 {activeTab === 'adjustment' && 'Fix mismatches between physical stock counts and system records.'}
               </p>
             </div>
