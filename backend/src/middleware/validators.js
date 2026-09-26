@@ -85,6 +85,20 @@ export const validateEmail = (req, res, next) => {
 };
 
 /**
+ * Restrict public account registration to Gmail addresses.
+ */
+export const validateGmailRegistration = (req, res, next) => {
+  const { email } = req.body;
+  if (typeof email !== 'string' || !email.toLowerCase().endsWith('@gmail.com')) {
+    return res.status(400).json({
+      success: false,
+      error: 'Registration is only available for @gmail.com addresses.',
+    });
+  }
+  next();
+};
+
+/**
  * Valid allowed status transitions state machine
  * Allowed transitions:
  * draft -> waiting, ready, canceled

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as authController from './auth.controller.js';
-import { validateRequiredFields, validateEmail } from '../../middleware/validators.js';
+import { validateRequiredFields, validateEmail, validateGmailRegistration } from '../../middleware/validators.js';
 import { authenticate } from '../../middleware/authMiddleware.js';
 
 const router = Router();
@@ -10,6 +10,7 @@ router.post(
   '/register',
   validateRequiredFields(['name', 'email', 'password']),
   validateEmail,
+  validateGmailRegistration,
   authController.handleRegister
 );
 
