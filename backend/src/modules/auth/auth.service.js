@@ -13,9 +13,12 @@ const generateOTP = () => {
 };
 
 /**
- * Register a new user and send verification OTP email
+ * Register a new user and send verification OTP email (Only Warehouse Staff can register via public signup)
  */
-export const registerUser = async ({ name, email, password, role = 'warehouse_staff' }) => {
+export const registerUser = async ({ name, email, password }) => {
+  // Public signups are strictly locked to 'warehouse_staff'. Managers/Admins are seeded manually.
+  const assignedRole = 'warehouse_staff';
+
   // Check if user already exists
   const existingRes = await query('SELECT id, is_verified FROM users WHERE email = $1', [email.toLowerCase()]);
   
@@ -24,7 +27,7 @@ export const registerUser = async ({ name, email, password, role = 'warehouse_st
     if (existing.is_verified) {
       throw new Error('An account with this email address already exists.');
     } else {
-      // User exists but is unverified; generate new OTP and update password/role
+      // User exists but is unverified; generate new OTP and update password
       const otp = generateOTP();
       const otpExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
       const passwordHash = await bcrypt.hash(password, 10);
@@ -33,7 +36,7 @@ export const registerUser = async ({ name, email, password, role = 'warehouse_st
         `UPDATE users 
          SET name = $1, password_hash = $2, role = $3, verification_otp = $4, otp_expires_at = $5 
          WHERE id = $6`,
-        [name, passwordHash, role, otp, otpExpires, existing.id]
+        [name, passwordHash, assignedRole, otp, otpExpires, existing.id]
       );
 
       await sendVerificationEmail(email.toLowerCase(), name, otp);
@@ -45,7 +48,7 @@ export const registerUser = async ({ name, email, password, role = 'warehouse_st
     }
   }
 
-  // Create new user
+  // Create new user (forced role: warehouse_staff)
   const passwordHash = await bcrypt.hash(password, 10);
   const otp = generateOTP();
   const otpExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
@@ -54,7 +57,7 @@ export const registerUser = async ({ name, email, password, role = 'warehouse_st
     `INSERT INTO users (name, email, password_hash, role, is_verified, verification_otp, otp_expires_at)
      VALUES ($1, $2, $3, $4, FALSE, $5, $6)
      RETURNING id, name, email, role, is_verified`,
-    [name, email.toLowerCase(), passwordHash, role, otp, otpExpires]
+    [name, email.toLowerCase(), passwordHash, assignedRole, otp, otpExpires]
   );
 
   const newUser = insertRes.rows[0];
