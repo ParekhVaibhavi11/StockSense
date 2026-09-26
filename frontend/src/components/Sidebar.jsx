@@ -7,6 +7,8 @@ import {
   History, 
   MapPin, 
   Users, 
+  User,
+  Settings,
   LogOut, 
   Boxes 
 } from 'lucide-react';
@@ -19,8 +21,8 @@ const Sidebar = () => {
     <aside className="sidebar">
       {/* Brand Header */}
       <div className="sidebar-header">
-        <div className="brand-logo">
-          <Boxes size={20} />
+        <div className="brand-logo" style={{ fontWeight: '800', letterSpacing: '-0.5px' }}>
+          SS
         </div>
         <span className="brand-name">StockSense</span>
       </div>
@@ -73,6 +75,22 @@ const Sidebar = () => {
         >
           <Users size={18} />
           <span>Suppliers</span>
+        </NavLink>
+
+        <NavLink 
+          to="/settings" 
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <Settings size={18} />
+          <span>Setting (Warehouse)</span>
+        </NavLink>
+
+        <NavLink 
+          to="/profile" 
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <User size={18} />
+          <span>My Profile</span>
         </NavLink>
       </nav>
 

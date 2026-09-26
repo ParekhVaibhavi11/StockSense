@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import OTPVerifyModal from '../features/auth/OTPVerifyModal';
-import { Boxes, Lock, Mail, User, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
+import ResetPasswordModal from '../features/auth/ResetPasswordModal';
+import { Boxes, Lock, Mail, User, ShieldCheck, ArrowRight, AlertCircle, KeyRound } from 'lucide-react';
 
 const AuthPage = () => {
   const navigate = useNavigate();
   const { login, register, otpPendingEmail, setOtpPendingEmail } = useAuth();
 
   const [isLogin, setIsLogin] = useState(true);
+  const [showResetModal, setShowResetModal] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -65,11 +67,22 @@ const AuthPage = () => {
         />
       )}
 
+      {/* OTP Password Reset Modal */}
+      {showResetModal && (
+        <ResetPasswordModal
+          onClose={() => setShowResetModal(false)}
+          onSuccess={() => {
+            setShowResetModal(false);
+            setIsLogin(true);
+          }}
+        />
+      )}
+
       <div style={{ width: '100%', maxWidth: '420px', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
         {/* Brand Header Banner */}
         <div style={{ backgroundColor: '#0b1021', padding: '32px 24px', color: '#ffffff', textAlign: 'center' }}>
-          <div style={{ width: '48px', height: '48px', backgroundColor: '#6366f1', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-            <Boxes size={28} color="#ffffff" />
+          <div style={{ width: '48px', height: '48px', backgroundColor: '#6366f1', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontWeight: '800', fontSize: '22px', letterSpacing: '-0.5px' }}>
+            SS
           </div>
           <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '24px', fontWeight: '700' }}>StockSense</h2>
           <p style={{ fontSize: '13px', color: '#94a3b8', marginTop: '4px' }}>Modular Real-Time Inventory Management</p>
@@ -111,7 +124,7 @@ const AuthPage = () => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder="Enter full name"
                     className="form-input"
                     style={{ paddingLeft: '36px' }}
                   />
@@ -137,7 +150,18 @@ const AuthPage = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label">Password</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <label className="form-label" style={{ margin: 0 }}>Password</label>
+                {isLogin && (
+                  <button
+                    type="button"
+                    onClick={() => setShowResetModal(true)}
+                    style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
+                  >
+                    Forgot Password?
+                  </button>
+                )}
+              </div>
               <div style={{ position: 'relative' }}>
                 <Lock size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input

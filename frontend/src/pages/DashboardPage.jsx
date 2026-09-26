@@ -66,12 +66,9 @@ const DashboardPage = () => {
       <Header title="Dashboard Overview" />
 
       <div className="page-content">
-        {/* KPI Cards Grid */}
+        {/* KPI Cards Grid (5 Boxes in 1 Line, No Icons) */}
         <div className="kpi-grid">
           <div className="kpi-card">
-            <div className="kpi-icon" style={{ backgroundColor: '#e0e7ff', color: '#6366f1' }}>
-              <Package size={24} />
-            </div>
             <div>
               <div className="kpi-title">Total Products in Stock</div>
               <div className="kpi-value">{loading ? '...' : kpis?.totalProductsInStock || 0}</div>
@@ -79,9 +76,6 @@ const DashboardPage = () => {
           </div>
 
           <div className="kpi-card">
-            <div className="kpi-icon" style={{ backgroundColor: '#fee2e2', color: '#ef4444' }}>
-              <AlertTriangle size={24} />
-            </div>
             <div>
               <div className="kpi-title">Low / Out of Stock</div>
               <div className="kpi-value" style={{ color: kpis?.lowStockItemsCount > 0 ? '#ef4444' : '#0f172a' }}>
@@ -91,9 +85,6 @@ const DashboardPage = () => {
           </div>
 
           <div className="kpi-card">
-            <div className="kpi-icon" style={{ backgroundColor: '#d1fae5', color: '#10b981' }}>
-              <ArrowDownLeft size={24} />
-            </div>
             <div>
               <div className="kpi-title">Pending Receipts</div>
               <div className="kpi-value">{loading ? '...' : kpis?.pendingReceiptsCount || 0}</div>
@@ -101,9 +92,6 @@ const DashboardPage = () => {
           </div>
 
           <div className="kpi-card">
-            <div className="kpi-icon" style={{ backgroundColor: '#e0f2fe', color: '#0284c7' }}>
-              <ArrowUpRight size={24} />
-            </div>
             <div>
               <div className="kpi-title">Pending Deliveries</div>
               <div className="kpi-value">{loading ? '...' : kpis?.pendingDeliveriesCount || 0}</div>
@@ -111,9 +99,6 @@ const DashboardPage = () => {
           </div>
 
           <div className="kpi-card">
-            <div className="kpi-icon" style={{ backgroundColor: '#fef3c7', color: '#d97706' }}>
-              <RefreshCw size={24} />
-            </div>
             <div>
               <div className="kpi-title">Internal Transfers</div>
               <div className="kpi-value">{loading ? '...' : kpis?.scheduledTransfersCount || 0}</div>

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Building2, ShieldCheck, User } from 'lucide-react';
 
 const Header = ({ title = 'Inventory Dashboard' }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const getInitials = (name) => {
     if (!name) return 'U';
@@ -39,7 +41,12 @@ const Header = ({ title = 'Inventory Dashboard' }) => {
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         {user && (
-          <div className="user-profile-pill">
+          <div 
+            className="user-profile-pill" 
+            onClick={() => navigate('/profile')} 
+            style={{ cursor: 'pointer' }}
+            title="Click to manage profile & password"
+          >
             <div className="user-avatar">{getInitials(user.name)}</div>
             <div>
               <div style={{ fontWeight: '600', color: '#0f172a', lineHeight: '1.2' }}>{user.name}</div>
