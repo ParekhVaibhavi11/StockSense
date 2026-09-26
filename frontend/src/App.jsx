@@ -9,6 +9,8 @@ import OperationsPage from './pages/OperationsPage';
 import MoveHistoryPage from './pages/MoveHistoryPage';
 import WarehousesPage from './pages/WarehousesPage';
 import SuppliersPage from './pages/SuppliersPage';
+import ProfilePage from './pages/ProfilePage';
+import SettingsPage from './pages/SettingsPage';
 import Sidebar from './components/Sidebar';
 
 // Protected Route Guard Component
@@ -89,6 +91,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <SuppliersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
               </ProtectedRoute>
             }
           />
