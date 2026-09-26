@@ -10,6 +10,7 @@ import inventoryRoutes from './modules/inventory/inventory.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 import locationsRoutes from './modules/locations/locations.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import suppliersRoutes from './modules/suppliers/suppliers.routes.js';
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use('/api/products', productsRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/locations', locationsRoutes);
+app.use('/api/suppliers', suppliersRoutes);
 
 // Global Error Handler Middleware
 app.use(errorHandler);
